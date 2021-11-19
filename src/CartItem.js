@@ -11,6 +11,19 @@ class CartItem extends React.Component {
             qty:1,
             img: ''
         }
+        //this.increaseQuantity = this.increaseQuantity.bind(this);
+    }
+    // increaseQuantity() {
+    //     console.log('tested');
+    //     console.log('y=this',this);
+    //     console.log('this.state',this.state); // it will show error as we know value of this will depenfd on how it is being called
+    // }
+    // ****other solution we can use arrow function
+        increaseQuantity=()=> { // arrow function will automatically bind the function with the instace of class CartItem
+        console.log('tested');
+        console.log('y=this',this);
+        console.log('this.state',this.state); // it will show error as we know value of this will depenfd on how it is being called
+
     }
     render() {
         // object destruction
@@ -32,9 +45,22 @@ class CartItem extends React.Component {
                     
                     <div className="cart-item-actions">
                         {/* here inside this we can write any javascriptn expression */}
-                        <img alt="increase" className="action-icons" src="https://cdn-icons.flaticon.com/png/512/3303/premium/3303893.png?token=exp=1637299825~hmac=ec99e8aadfdaa2dbabc1bbca2b7c6b1d" />
-                        <img alt="decrease" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/1828/1828906.png" />
-                        <img alt="delete" className="action-icons" src="https://cdn-icons.flaticon.com/png/512/484/premium/484611.png?token=exp=1637299881~hmac=0d91ca66e7b6a485e3955e17cf1bcf64" />
+                        <img
+                            alt="increase"
+                            className="action-icons"
+                            src="https://cdn-icons.flaticon.com/png/512/3303/premium/3303893.png?token=exp=1637299825~hmac=ec99e8aadfdaa2dbabc1bbca2b7c6b1d"
+                            //onClick = {this.increaseQuantity.bind(this)} //this is one way we can also bing=d in constructor also. we are binding instance with this ?? need to understand clearly 
+                            onClick = {this.increaseQuantity} // by doing this we acan bind b=using constructor
+                            />
+                        <img
+                            alt="decrease"
+                            className="action-icons"
+                            src="https://cdn-icons-png.flaticon.com/512/1828/1828906.png" 
+                            />
+                        <img
+                            alt="delete"
+                            className="action-icons"
+                            src="https://cdn-icons.flaticon.com/png/512/484/premium/484611.png?token=exp=1637299881~hmac=0d91ca66e7b6a485e3955e17cf1bcf64" />
 
                     </div>
 
