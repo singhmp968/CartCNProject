@@ -27,11 +27,44 @@ class CartItem extends React.Component {
         // this is comed from React.Component and we are using it for rendering the ui componet
        // this is setState form 1
         // we can use this method when our required value does ot depend on previous state e.g title
-       this.setState({ // and here ww want to tell what we need to change in the componenet // this method will only do shallow merging i.e if i want to change the qty it will only change the qty 
+      
+        this.setState({ // and here ww want to tell what we need to change in the componenet // this method will only do shallow merging i.e if i want to change the qty it will only change the qty 
             qty:this.state.qty + 1 //  this.state is in constructor
         })
         */
+        // here we are calling setState 3 time but setState will render only once and this is happening because of the concept called **batchig
+        // Batching->batching means in a event handler no matter how many times you called this.setState react will merge this into one Single setStare and that is why our component is render only once
+        // react will going to take up the last call and take the last object mad used for merging
+       /* this.setState({ // and here ww want to tell what we need to change in the componenet // this method will only do shallow merging i.e if i want to change the qty it will only change the qty 
+            qty:this.state.qty + 5 //  this.state is in constructor
+        })
+        this.setState({ // and here ww want to tell what we need to change in the componenet // this method will only do shallow merging i.e if i want to change the qty it will only change the qty 
+            qty:this.state.qty + 1 //  this.state is in constructor
+        })
+        *
+        
         /**set state form 2 */
+        // we can use this method when our required value depend on previous state e. qty
+        this.setState((prevState)=> { //  here we are passing the previous state
+            return {
+                qty: prevState.qty + 1
+            }
+        },() =>{
+            console.log('inside call back',this.state)
+        }) // inoreder to solve this we have if we want to perform some action after update is happen we can follow this metod 
+        // our setState call is async
+    console.log(this.state) // check the ui and console value ui=2, c.log 1 there for react provide a method  when we are calling this.state we cannot relay on this.setState
+        /*
+        // here in 2 method the value will is increasing by 3
+        // in second method it is basically maintaning a queue anit is passing the callback at the queue and react will make sure that the previous state will be update while callint the next this.SetSttate
+        // we can use this method when our required value depend on previous state e. qty
+        this.setState((prevState)=> { //  here we are passing the previous state
+            return {
+                qty: prevState.qty + 1
+            }
+        },()=> {
+             // here also we can to the same as we have done for passing the call back
+        })
         // we can use this method when our required value depend on previous state e. qty
         this.setState((prevState)=> { //  here we are passing the previous state
             return {
@@ -39,11 +72,15 @@ class CartItem extends React.Component {
             }
         })
     
+    */
+
+
     
     }
 
     decreaseQuantity=()=> {
         console.log('this',this);
+        const { qty } = this.state // destructuring 
        this.setState((prevState)=>{
            if(prevState.qty >0 ){
            return {
