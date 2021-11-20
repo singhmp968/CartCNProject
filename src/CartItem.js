@@ -12,6 +12,7 @@ class CartItem extends React.Component {
             img: ''
         }
         //this.increaseQuantity = this.increaseQuantity.bind(this);
+        this.testing(); // calling ttesting
     }
     // increaseQuantity() {
     //     console.log('tested');
@@ -74,10 +75,12 @@ class CartItem extends React.Component {
     
     */
 
-
+// 
     
     }
 
+
+    
     decreaseQuantity=()=> {
         console.log('this',this);
         const { qty } = this.state // destructuring 
@@ -95,6 +98,30 @@ class CartItem extends React.Component {
        })
 
     }
+
+
+// batching will not always occour in some cases like promis and ajax call
+testing () {
+    const promise = new Promise((resolve,reject)=>{
+       
+        setTimeout(() => {
+            resolve('done')
+        },5000)
+        
+    })
+    promise.then(() => {
+        // in promie setState act like sync call
+        //this.setState({qty: 100});
+        this.setState({qty: this.state.qty + 10});
+        this.setState({qty: this.state.qty + 10});        
+        this.setState({qty: this.state.qty + 10});
+         //o/p will be 30 all three will get adds up
+        console.log('state',this.state);
+    }); 
+}
+
+
+
     render() {
         // object destruction
         const {price,title,qty} = this.state;
