@@ -23,6 +23,39 @@ class CartItem extends React.Component {
         console.log('tested');
         console.log('y=this',this);
         console.log('this.state',this.state); // it will show error as we know value of this will depenfd on how it is being called
+       /*
+        // this is comed from React.Component and we are using it for rendering the ui componet
+       // this is setState form 1
+        // we can use this method when our required value does ot depend on previous state e.g title
+       this.setState({ // and here ww want to tell what we need to change in the componenet // this method will only do shallow merging i.e if i want to change the qty it will only change the qty 
+            qty:this.state.qty + 1 //  this.state is in constructor
+        })
+        */
+        /**set state form 2 */
+        // we can use this method when our required value depend on previous state e. qty
+        this.setState((prevState)=> { //  here we are passing the previous state
+            return {
+                qty: prevState.qty + 1
+            }
+        })
+    
+    
+    }
+
+    decreaseQuantity=()=> {
+        console.log('this',this);
+       this.setState((prevState)=>{
+           if(prevState.qty >0 ){
+           return {
+               qty:prevState.qty-1
+           }
+        }else if(prevState.qty==1 ){
+            
+                return {
+                    qty:1
+                }
+        }
+       })
 
     }
     render() {
@@ -56,6 +89,7 @@ class CartItem extends React.Component {
                             alt="decrease"
                             className="action-icons"
                             src="https://cdn-icons-png.flaticon.com/512/1828/1828906.png" 
+                            onClick = {this.decreaseQuantity}
                             />
                         <img
                             alt="delete"
