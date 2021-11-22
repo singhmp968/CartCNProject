@@ -12,7 +12,7 @@ class CartItem extends React.Component {
             img: ''
         }
         //this.increaseQuantity = this.increaseQuantity.bind(this);
-        this.testing(); // calling ttesting
+        //this.testing(); // calling ttesting
     }
     // increaseQuantity() {
     //     console.log('tested');
@@ -101,7 +101,7 @@ class CartItem extends React.Component {
 
 
 // batching will not always occour in some cases like promis and ajax call
-testing () {
+/*testing () {
     const promise = new Promise((resolve,reject)=>{
        
         setTimeout(() => {
@@ -119,7 +119,7 @@ testing () {
         console.log('state',this.state);
     }); 
 }
-
+*/
 
 
     render() {
