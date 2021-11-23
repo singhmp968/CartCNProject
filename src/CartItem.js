@@ -2,8 +2,9 @@ import React from "react";
 // creating react componentt
 class CartItem extends React.Component {
     // this method will basically describe the  Ui component that will be rereturn jsx compoennt to our Ui
-
+/*
     constructor() {
+      
         super() // wheneveer we are inheriting anything from another class we first need to call const of the parent class beacause we are usng const()
         this.state = {
             price:999,
@@ -14,6 +15,7 @@ class CartItem extends React.Component {
         //this.increaseQuantity = this.increaseQuantity.bind(this);
         //this.testing(); // calling ttesting
     }
+    */
     // increaseQuantity() {
     //     console.log('tested');
     //     console.log('y=this',this);
@@ -123,8 +125,12 @@ class CartItem extends React.Component {
 
 
     render() {
+        console.log('this.prop',this.props) // we will recive props values here
+
         // object destruction
-        const {price,title,qty} = this.state;
+        //const {price,title,qty} = this.state;
+        const {price,title,qty} = this.props.product;
+        
         return(
             <div className="cart-item">
                 <div className="left-block">
