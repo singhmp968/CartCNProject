@@ -52,14 +52,24 @@ class Cart extends React.Component {
         const index =products.indexOf(product);
         products[index].qty -=1; // decreasing the value by one
 
-        if(products[index].qty==1 || products[index].qty <=0){
-            products[index].qty =1; 
+        if(products[index].qty <=0){
+            products[index].qty =0; 
         }
        
         this.setState({
             products:products
         })
     }
+
+    handleDeleteProduct=(id)=>{
+        const { products } = this.state;
+        const items = products.filter((item)=> item.id !=id )// this will return [{ whose id is not 'id'}]
+        this.setState({
+            products:items
+        })
+
+    }
+
     render(){
        // const arr= [1,2,3,4,5]
        // destructruing this.state
@@ -79,11 +89,11 @@ class Cart extends React.Component {
                 onIncreaseQuantity = {this.handleIncreaseQuantity // this is giving the reference to the required function
                 }
                 onDecreaseQuantity ={this.handleDecreaseQuantity}
+                onDeleteProduct = {this.handleDeleteProduct}
                 func = {() => console.log('sdsa')}
                 isloggedin = {false}
                 jsx={<h1>Test</h1>}
                 comp={<CartItem />} 
-            
                 />
             }) }
             {/* here we can pass any expression */}

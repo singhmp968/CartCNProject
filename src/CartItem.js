@@ -136,7 +136,7 @@ class CartItem extends React.Component {
         // object destruction
         //const {price,title,qty} = this.state;
         const {price,title,qty} = this.props.product;
-        
+        const { product,onIncreaseQuantity,onDecreaseQuantity, onDeleteProduct } = this.props
         return(
             <div className="cart-item">
                 <div className="left-block">
@@ -160,7 +160,9 @@ class CartItem extends React.Component {
                             src="https://cdn-icons.flaticon.com/png/512/3303/premium/3303893.png?token=exp=1637299825~hmac=ec99e8aadfdaa2dbabc1bbca2b7c6b1d"
                             //onClick = {this.increaseQuantity.bind(this)} //this is one way we can also bing=d in constructor also. we are binding instance with this ?? need to understand clearly 
                             onClick = {//this.increaseQuantity
-                                () => this.props.onIncreaseQuantity(this.props.product)
+                                //() => this.props.onIncreaseQuantity(this.props.product)
+                                () => onIncreaseQuantity(product)
+                                
                             } // by doing this we acan bind b=using constructor
                             
                             />
@@ -170,13 +172,17 @@ class CartItem extends React.Component {
                             src="https://cdn-icons-png.flaticon.com/512/1828/1828906.png" 
                             onClick = {
                                    // this.decreaseQuantity //calling the function
-                                    () => this.props.onDecreaseQuantity(this.props.product) 
+                                    () => onDecreaseQuantity(product) 
                                 }
                             />
                         <img
                             alt="delete"
                             className="action-icons"
-                            src="https://cdn-icons.flaticon.com/png/512/484/premium/484611.png?token=exp=1637299881~hmac=0d91ca66e7b6a485e3955e17cf1bcf64" />
+                            src="https://cdn-icons.flaticon.com/png/512/484/premium/484611.png?token=exp=1637299881~hmac=0d91ca66e7b6a485e3955e17cf1bcf64"
+                            onClick = {
+                                ()=>onDeleteProduct(product.id)
+                            }
+                            />
 
                     </div>
 
