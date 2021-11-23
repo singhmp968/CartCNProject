@@ -34,7 +34,32 @@ class Cart extends React.Component {
          ]
         }
     }
+//handling increaceQty
+    handleIncreaseQuantity=(product)=>{
+        console.log('hey please increase the quantity of ',product);
+        const { products } = this.state; // gettting the product from the state
+        const index = products.indexOf(product);
+        products[index].qty +=1;
+        this.setState({
+            products: products // updating the products to the new products values
+            // or we can simpley pass products
+        })
+    } 
 
+    handleDecreaseQuantity=(product) =>{
+        console.log('inside handleing decreaase qty');
+        const { products } = this.state; // getting the value of products using this.state
+        const index =products.indexOf(product);
+        products[index].qty -=1; // decreasing the value by one
+
+        if(products[index].qty==1 || products[index].qty <=0){
+            products[index].qty =1; 
+        }
+       
+        this.setState({
+            products:products
+        })
+    }
     render(){
        // const arr= [1,2,3,4,5]
        // destructruing this.state
@@ -51,6 +76,9 @@ class Cart extends React.Component {
                 return <CartItem 
                 product={product}
                 key={product.id}
+                onIncreaseQuantity = {this.handleIncreaseQuantity // this is giving the reference to the required function
+                }
+                onDecreaseQuantity ={this.handleDecreaseQuantity}
                 func = {() => console.log('sdsa')}
                 isloggedin = {false}
                 jsx={<h1>Test</h1>}

@@ -22,11 +22,13 @@ class CartItem extends React.Component {
     //     console.log('this.state',this.state); // it will show error as we know value of this will depenfd on how it is being called
     // }
     // ****other solution we can use arrow function
+       /*
         increaseQuantity=()=> { // arrow function will automatically bind the function with the instace of class CartItem
         console.log('tested');
         console.log('y=this',this);
         console.log('this.state',this.state); // it will show error as we know value of this will depenfd on how it is being called
-       /*
+       */
+        /*
         // this is comed from React.Component and we are using it for rendering the ui componet
        // this is setState form 1
         // we can use this method when our required value does ot depend on previous state e.g title
@@ -48,7 +50,8 @@ class CartItem extends React.Component {
         
         /**set state form 2 */
         // we can use this method when our required value depend on previous state e. qty
-        this.setState((prevState)=> { //  here we are passing the previous state
+       
+       /* this.setState((prevState)=> { //  here we are passing the previous state
             return {
                 qty: prevState.qty + 1
             }
@@ -57,7 +60,8 @@ class CartItem extends React.Component {
         }) // inoreder to solve this we have if we want to perform some action after update is happen we can follow this metod 
         // our setState call is async
     console.log(this.state) // check the ui and console value ui=2, c.log 1 there for react provide a method  when we are calling this.state we cannot relay on this.setState
-        /*
+       */
+       /*
         // here in 2 method the value will is increasing by 3
         // in second method it is basically maintaning a queue anit is passing the callback at the queue and react will make sure that the previous state will be update while callint the next this.SetSttate
         // we can use this method when our required value depend on previous state e. qty
@@ -79,9 +83,9 @@ class CartItem extends React.Component {
 
 // 
     
-    }
+    //}
 
-
+/*
     
     decreaseQuantity=()=> {
         console.log('this',this);
@@ -100,7 +104,7 @@ class CartItem extends React.Component {
        })
 
     }
-
+*/
 
 // batching will not always occour in some cases like promis and ajax call
 /*testing () {
@@ -122,6 +126,8 @@ class CartItem extends React.Component {
     }); 
 }
 */
+
+
 
 
     render() {
@@ -153,13 +159,19 @@ class CartItem extends React.Component {
                             className="action-icons"
                             src="https://cdn-icons.flaticon.com/png/512/3303/premium/3303893.png?token=exp=1637299825~hmac=ec99e8aadfdaa2dbabc1bbca2b7c6b1d"
                             //onClick = {this.increaseQuantity.bind(this)} //this is one way we can also bing=d in constructor also. we are binding instance with this ?? need to understand clearly 
-                            onClick = {this.increaseQuantity} // by doing this we acan bind b=using constructor
+                            onClick = {//this.increaseQuantity
+                                () => this.props.onIncreaseQuantity(this.props.product)
+                            } // by doing this we acan bind b=using constructor
+                            
                             />
                         <img
                             alt="decrease"
                             className="action-icons"
                             src="https://cdn-icons-png.flaticon.com/512/1828/1828906.png" 
-                            onClick = {this.decreaseQuantity}
+                            onClick = {
+                                   // this.decreaseQuantity //calling the function
+                                    () => this.props.onDecreaseQuantity(this.props.product) 
+                                }
                             />
                         <img
                             alt="delete"
