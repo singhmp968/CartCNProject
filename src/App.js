@@ -44,29 +44,56 @@ class App extends React.Component {
 
     componentDidMount(){ // usinng componentDidMount() for calling the data from fire base just after our componenet is mounted 
       // here we are chaning our method
+      // firebase
+      // .firestore()
+      // .collection('products')
+      // .get() // this get method will return me a promise and it will give QuerySnapshot;
+      // .then((snapshot) => { // using it beacause we are using get() here
+      //   console.log(snapshot);
+      //   snapshot.docs.map((doc)=> {
+      //       console.log(doc.data()); // gettingthe data
+      //   });
+      //   // storing in the products
+      //   const products = snapshot.docs.map((doc) => {
+      //     const data = doc.data();
+      //     data['id'] = doc.id;// creating id in data and passing doc.id value
+      //     return data;
+      //   })
+      //   this.setState({
+      //     //products:products
+      //     // or we can uss short hand
+      //     products,
+      //     loading:false //when produst will displayed
+      //   })
+
+      //  }) 
+  
+      
       firebase
       .firestore()
       .collection('products')
-      .get() // this get method will return me a promise and it will give QuerySnapshot;
-      .then((snapshot) => { // using it beacause we are using get() here
-        console.log(snapshot);
-        snapshot.docs.map((doc)=> {
-            console.log(doc.data()); // gettingthe data
-        });
-        // storing in the products
-        const products = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          data['id'] = doc.id;// creating id in data and passing doc.id value
-          return data;
-        })
-        this.setState({
-          //products:products
-          // or we can uss short hand
-          products,
-          loading:false //when produst will displayed
-        })
-
-       }) 
+      .onSnapshot((snapshot) => { // this will attached a lsitner to the queryattechedListner
+  
+        // using it beacause we are using get() here
+          console.log(snapshot);
+          snapshot.docs.map((doc)=> {
+              console.log(doc.data()); // gettingthe data
+          });
+          // storing in the products
+          const products = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            data['id'] = doc.id;// creating id in data and passing doc.id value
+            return data;
+          })
+          this.setState({
+            //products:products
+            // or we can uss short hand
+            products,
+            loading:false //when produst will displayed
+          })
+        
+        }) 
+  
     }
 //handling increaceQty
     handleIncreaseQuantity=(product)=>{
