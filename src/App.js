@@ -40,6 +40,7 @@ class App extends React.Component {
                
          //]
         }
+        this.db = firebase.firestore() // creating firestore
     }
 
     componentDidMount(){ // usinng componentDidMount() for calling the data from fire base just after our componenet is mounted 
@@ -69,9 +70,13 @@ class App extends React.Component {
       //  }) 
   
       
-      firebase
-      .firestore()
+      // firebase
+      // .firestore()
+     this.db // this is definr @ constructor
       .collection('products')
+      // .where('price','==',999)
+      // .where('title','==','mobile phone')
+      .orderBy('price','asc') // sorting the data by price
       .onSnapshot((snapshot) => { // this will attached a lsitner to the queryattechedListner
   
         // using it beacause we are using get() here
@@ -100,17 +105,46 @@ class App extends React.Component {
         console.log('hey please increase the quantity of ',product);
         const { products } = this.state; // gettting the product from the state
         const index = products.indexOf(product);
-        products[index].qty +=1;
+        // old code
+        /*products[index].qty +=1;
         this.setState({
             products: products // updating the products to the new products values
             // or we can simpley pass products
         })
+        */
+       // getting current value
+       const docRef = this.db.collection('products').doc(products[index].id);
+       docRef
+       .update({
+         qty:products[index].qty + 1 // increasing the current product quantity
+       })
+       .then(() => {
+         console.log('Updated Success fully');
+       })
+       .catch((error)=>{
+         console.log('error',error);
+       })
     } 
 
     handleDecreaseQuantity=(product) =>{
         console.log('inside handleing decreaase qty');
         const { products } = this.state; // getting the value of products using this.state
         const index =products.indexOf(product);
+        if(products[index].qty === 0) {
+          return;
+        }
+        const docRef = this.db.collection('products').doc(products[index].id);
+        docRef
+        .update({
+          qty:products[index].qty-1
+        })
+        .then(()=>{
+          console.log('updated successfully');
+        })
+        .catch((error) => {
+          console.log('erroe:',error);
+        })
+        /*
         products[index].qty -=1; // decreasing the value by one
 
         if(products[index].qty <=0){
@@ -120,13 +154,24 @@ class App extends React.Component {
         this.setState({
             products:products
         })
+        */
     }
 
     handleDeleteProduct=(id)=>{
         const { products } = this.state;
-        const items = products.filter((item)=> item.id !=id )// this will return [{ whose id is not 'id'}]
-        this.setState({
-            products:items
+        // const items = products.filter((item)=> item.id !=id )// this will return [{ whose id is not 'id'}]
+        // this.setState({
+        //     products:items
+        // })
+
+        const docRef = this.db.collection('products').doc(id); //passing just id only
+        docRef
+        .delete()
+        .then(()=>{
+          console.log('deleted successfully');
+        })
+        .catch((error) => {
+          console.log('erroe:',error);
         })
 
     }
@@ -153,6 +198,23 @@ class App extends React.Component {
    return cartTotal;
  }
 
+ addProduct=()=>{
+  // firebase.firestore
+  this.db
+  .collection('products')
+  .add({ //this will add the data into firebase this will return a promise and it will return a document refernce
+    img:'',
+    price:900,
+    qty:3,
+    title:'washing machine'
+  })
+  .then((docRef)=> {
+    console.log('product has been added',docRef)
+  })
+  .catch((err) =>{
+    console.log('erroe',err)
+  })
+}
 
   render(){
     const { products,loading } = this.state; // gettign the products from state
@@ -161,6 +223,7 @@ class App extends React.Component {
         <h1>Cart</h1>
         {/* using cart items */}
         <Navbar count={this.getCartCount()} />
+        {/* <button onClick={this.addProduct} style={{padding:20,fontSize:20}} >Add a product</button> */}
         <Cart
         // we are passing theis value to cart componenet vaia props 
         products={products}
